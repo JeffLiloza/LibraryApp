@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" /> {% block head %} {% endblock %}
+    <title>Invento Library</title>
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<body>
+    <div class="navbar">
+        <nav class="navbar navbar-light navbar-expand-md fixed-top textbody text-start text-body navigation-clean" style="background: linear-gradient(161deg, #00a9b9 0%, #651f31)">
+            <div class="container">
+                <a class="navbar-brand border-secondary" href="/" style="color: rgb(255, 255, 255)">   Invento Library  </a
+          ><button
+            data-bs-toggle="collapse"
+            class="navbar-toggler"
+            data-bs-target="#navcol-1"
+          >
+            <span class="visually-hidden">Toggle navigation</span
+            ><span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  href="/books"
+                  style="color: rgb(255, 255, 255)"
+                  >Books</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  href="/orders"
+                  style="color: rgb(255, 255, 255)"
+                  >My orders</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  href="/help"
+                  style="color: rgb(255, 255, 255)"
+                  >Help</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  href="/rules"
+                  style="color: rgb(255, 255, 255)"
+                  >Rules</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="/logout"
+                  style="color: rgb(255, 255, 255)"
+                  >Logout</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="main">{% block content %} {% endblock %}</div>
+    <style>
+      .main {
+        margin-top: 40px; /* Add a top margin to avoid content overlay */
+      }
+    </style>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      charset="utf-8"
+    ></script>
+    <script type="text/javascript">
+      function getPageList(totalPages, page, maxLength) {
+        function range(start, end) {
+          return Array.from(Array(end - start + 1), (_, i) => i + start);
+        }
+
+        var sideWidth = maxLength < 9 ? 1 : 2;
+        var leftWidth = (maxLength - sideWidth * 2 - 3) >> 1;
+        var rightWidth = (maxLength - sideWidth * 2 - 3) >> 1;
+
+        if (totalPages <= maxLength) {
+          return range(1, totalPages);
+        }
+
+        if (page <= maxLength - sideWidth - 1 - rightWidth) {
+          return range(1, maxLength - sideWidth - 1).concat(
+            0,
+            range(totalPages - sideWidth + 1, totalPages)
+          );
+        }
+
+        if (page >= totalPages - sideWidth - 1 - rightWidth) {
+          return range(1, sideWidth).concat(
+            0,
+            range(
+              totalPages - sideWidth - 1 - rightWidth - leftWidth,
+              totalPages
+            )
+          );
+        }
+
+        return range(1, sideWidth).concat(
+          0,
+          range(page - leftWidth, page + rightWidth),
+          0,
+          range(totalPages - sideWidth + 1, totalPages)
+        );
+      }
+
+      $(function () {
+        var numberOfItems = $(".card-content .card").length;
+        var limitPerPage = 9; //How many card items visible per a page
+        var totalPages = Math.ceil(numberOfItems / limitPerPage);
+        var paginationSize = 7; //How many page elements visible in the pagination
+        var currentPage;
+
+        function showPage(whichPage) {
+          if (whichPage < 1 || whichPage > totalPages) return false;
+
+          currentPage = whichPage;
+
+          $(".card-content .card")
+            .hide()
+            .slice((currentPage - 1) * limitPerPage, currentPage * limitPerPage)
+            .show();
+
+          $(".pagination li").slice(1, -1).remove();
+
+          getPageList(totalPages, currentPage, paginationSize).forEach(
+            (item) => {
+              $("<li>")
+                .addClass("page-item")
+                .addClass(item ? "current-page" : "dots")
+                .toggleClass("active", item === currentPage)
+                .append(
+                  $("<a>")
+                    .addClass("page-link")
+                    .attr({
+                      href: "javascript:void(0)",
+                    })
+                    .text(item || "...")
+                )
+                .insertBefore(".next-page");
+            }
+          );
+
+          $(".previous-page").toggleClass("disable", currentPage === 1);
+          $(".next-page").toggleClass("disable", currentPage === totalPages);
+          return true;
+        }
+
+        $(".pagination").append(
+          $("<li>")
+            .addClass("page-item")
+            .addClass("previous-page")
+            .append(
+              $("<a>")
+                .addClass("page-link")
+                .attr({
+                  href: "javascript:void(0)",
+                })
+                .text("Prev")
+            ),
+          $("<li>")
+            .addClass("page-item")
+            .addClass("next-page")
+            .append(
+              $("<a>")
+                .addClass("page-link")
+                .attr({
+                  href: "javascript:void(0)",
+                })
+                .text("Next")
+            )
+        );
+
+        $(".card-content").show();
+        showPage(1);
+
+        $(document).on(
+          "click",
+          ".pagination li.current-page:not(.active)",
+          function () {
+            return showPage(+$(this).text());
+          }
+        );
+
+        $(".next-page").on("click", function () {
+          return showPage(currentPage + 1);
+        });
+
+        $(".previous-page").on("click", function () {
+          return showPage(currentPage - 1);
+        });
+      });
+    </script>
+  </body>
+</html>

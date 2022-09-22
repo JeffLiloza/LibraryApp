@@ -1,0 +1,40 @@
+{% extends 'user/layout.html' %} {% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/books.css')}}" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" charset="utf-8"></script>
+{% endblock %} {%block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="">
+            <div id="myItems">
+                <div class="card-content" style="display: none">
+                    {% for row in list_users %}
+                    <div class="card h-100" style="width: 18rem">
+                        <div class="card-image">
+                            <a href="/order/{{row[1]}}}">
+                                <img src=" {{url_for( 'static', filename=row[11])}} " alt=" " class="card-img-top" />
+                            </a>
+                        </div>
+                        <div class="card-info">
+                            <h3 class="card-title">{{row[13]}}</h3>
+                            <p class="card-text">{{row[12]}}</p>
+                        </div>
+                    </div>
+                    {% endfor%}
+                    <div class="pagination">
+                        <!--<li class="page-item previous-page disable"><a class="page-link" href="#">Prev</a></li>
+          <li class="page-item current-page active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+          <li class="page-item current-page"><a class="page-link" href="#">5</a></li>
+          <li class="page-item current-page"><a class="page-link" href="#">6</a></li>
+          <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+          <li class="page-item current-page"><a class="page-link" href="#">10</a></li>
+          <li class="page-item next-page"><a class="page-link" href="#">Next</a></li>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+</div>

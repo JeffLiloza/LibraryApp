@@ -1,0 +1,172 @@
+{% extends 'user/layout.html' %} {% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/books.css')}}" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" charset="utf-8"></script>
+{% endblock %} {%block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-3 px-1 bg-dark position-fixed" id="sticky-sidebar">
+            <div class="sidenav" style="padding-top: 55px ;">
+                <a href="#about">Categories</a>
+                <button class="dropdown-btn">Class Books
+    <i class="fa fa-caret-down"></i>
+  </button>
+                <div class="dropdown-container">
+                    <a href="#">EYPYP</a>
+                    <a href="#">PYP</a>
+                    <a href="#">MYP</a>
+                </div>
+
+            </div>
+        </div>
+        <div class="col" id="main">
+            <div class="col-sm-12 mb-3" style="margin-top: 10px">
+                <input type="text" id="myFilter" class="form-control" onkeyup="myFunction()" placeholder="Search for names.." />
+            </div>
+
+            <div id="myItems">
+                <div class="card-content" style="display: none">
+                    {% for row in list_users %}
+                    <div class="card h-100 ">
+
+                        <div class="card-image">
+                            <a href="/book/{{row[0]}}}">
+                                <img src=" {{url_for( 'static', filename=row[11])}} " alt=" " class="card-img-top" />
+                            </a>
+                        </div>
+                        <div class="card-info">
+                            <h3 class="card-title">{{row[1]}}</h3>
+                            <p class="card-text">{{row[2]}}</p>
+                        </div>
+
+                    </div>
+                    {% endfor%}
+                    <div class="pagination">
+                        <!--<li class="page-item previous-page disable"><a class="page-link" href="#">Prev</a></li>
+          <li class="page-item current-page active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+          <li class="page-item current-page"><a class="page-link" href="#">5</a></li>
+          <li class="page-item current-page"><a class="page-link" href="#">6</a></li>
+          <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+          <li class="page-item current-page"><a class="page-link" href="#">10</a></li>
+          <li class="page-item next-page"><a class="page-link" href="#">Next</a></li>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function myFunction() {
+        var input, filter, cards, cardContainer, h5, title, i;
+        input = document.getElementById("myFilter");
+        filter = input.value.toUpperCase();
+        cardContainer = document.getElementById("myItems");
+        cards = cardContainer.getElementsByClassName("card");
+        for (i = 0; i < cards.length; i++) {
+            title = cards[i].querySelector(".card-info h3.card-title");
+            if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+                cards[i].style.display = "";
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
+    }
+</script>
+<script>
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
+<style>
+    body {
+        font-family: "Lato", sans-serif;
+    }
+    /* Fixed sidenav, full height */
+    
+    .sidenav {
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background: linear-gradient(135deg, #00a9b9, #651f31);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
+    /* Style the sidenav links and the dropdown button */
+    
+    .sidenav a,
+    .dropdown-btn {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 20px;
+        color: white;
+        display: block;
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+        outline: none;
+    }
+    /* On mouse-over */
+    
+    .sidenav a:hover,
+    .dropdown-btn:hover {
+        color: #f1f1f1;
+    }
+    /* Main content */
+    
+    .main {
+        margin-left: 200px;
+        /* Same as the width of the sidenav */
+        font-size: 20px;
+        /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+    /* Add an active class to the active dropdown button */
+    
+    .active {
+        color: white;
+    }
+    /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+    
+    .dropdown-container {
+        display: none;
+        background-color: #651f31;
+        padding-left: 8px;
+    }
+    /* Optional: Style the caret down icon */
+    
+    .fa-caret-down {
+        float: right;
+        padding-right: 8px;
+    }
+    /* Some media queries for responsiveness */
+    
+    @media screen and (max-height: 450px) {
+        .sidenav {
+            padding-top: 15px;
+        }
+        .sidenav a {
+            font-size: 18px;
+        }
+    }
+</style>
+{% endblock %}
+</div>
