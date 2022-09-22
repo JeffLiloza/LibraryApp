@@ -1,0 +1,40 @@
+{% extends 'admin/layout.html' %} {% block content %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="card card-body">
+            <form action="/adminpn/orderupdate/{{student.id}}" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input type="text" name="returned" value="{{student.returned}}" class="form-control" />
+
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">State at the time</label>
+                    <select class="form-control" id="exampleFormControlSelect1" name="condition">
+                        <option value="Good">Good</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Bad">Bad</option>
+
+
+                    </select>
+
+                </div>
+                <div class="mb-3">
+                    <dl>
+                        <p>
+                            <input type="file" name="file" class="form-control" autocomplete="off" required>
+                        </p>
+                    </dl>
+                </div>
+
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">
+            Update
+          </button>
+        </div>
+        </form>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'admin/layout.html' %}{% block title%} {%endblock%} {% block content %}
+<div class="row">
+    <h3>Orders</h3>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">x</span>
+      </button>
+        </div>
+    </div>
+    {% endfor %} {% endif %} {% endwith %}
+    <div class="card card-body">
+        <form action="{{url_for('adminpn.add_orders')}}" method="POST">
+            <div class="form-group">
+                <input type="text" class="form-control" name="oisbn" placeholder="ISBN" required>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" name="oquantity" placeholder="Quantity" required>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" name="oborrowed" placeholder="Borrowed" required>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" name="oidCard" placeholder="Card ID" required>
+            </div>
+
+
+            <button class="btn btn-primary btn-block">
+              Add Order
+            </button>
+        </form>
+    </div>
+</div>
+<div class="col-md-8">
+    <table id="myTable" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+
+                <td>ID</td>
+                <td>ISBN</td>
+                <td>Quantity</td>
+                <td>Borowed</td>
+                <td>Returned</td>
+                <td>Name</td>
+                <td>Grade</td>
+                <td>Student Photo</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in list_users %}
+            <tr>
+                <td>{{row[0]}}</td>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+                <td>{{row[5]}}</td>
+                <td>{{row[6]}}</td>
+                <td>{{row[7]}}</td>
+                <td><img src="{{ url_for('static', filename=row[8]) }}" width=400 class="img-fluid img-thumbnail"></img>
+                </td>
+                <td width="130">
+                    <a href="/adminpn/orderedit/{{row[0]}}" class="btn btn-secondary btn-sm">Returned</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+
+
+
+{% endblock %}

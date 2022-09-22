@@ -1,0 +1,31 @@
+{% extends 'admin/layout.html' %} {% block content %} {% for row in bookInfo %}
+<div class="row">
+    <div class="col-md-4">
+        <ul class="list-group">
+
+            <li class="list-group-item">ISBN : {{row[0]}}</li>
+            <li class="list-group-item">Title: {{row[1]}} </li>
+            <li class="list-group-item">Publishers: {{row[2]}}</li>
+            <li class="list-group-item">Publish date: {{row[3]}}</li>
+            <li class="list-group-item">Number Of Pages: {{row[4]}}</li>
+            <li class="list-group-item">Authors: {{row[5]}}</li>
+            <li class="list-group-item">ISBN13: {{row[7]}}</li>
+            <li class="list-group-item">Binding: {{row[8]}}</li>
+            <li class="list-group-item">Language: {{row[9]}}</li>
+            <li class="list-group-item">{{row[10]}}</li>
+
+
+
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <img src="{{ url_for('static', filename=image) }}" width=400 class="img-fluid img-thumbnail"></img>
+
+    </div>
+    <div class="col-md-4">
+        <ul class="list-group"></ul>
+        <li class="list-group-item">{{row[6]}}</li>
+        </ul>
+    </div>
+</div>
+{% endfor %} {% endblock %}
