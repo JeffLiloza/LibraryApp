@@ -1,0 +1,23 @@
+{% extends 'layout.html' %} {% block title %}Home{% endblock %} {% block content%}
+<div class="col-md-4">
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">x</span>
+      </button>
+    </div>
+    {% endfor %} {% endif %} {% endwith %}
+</div>
+
+<div class="list-group">
+    <a href="/adminpn/library" class="list-group-item list-group-item-action">
+    Library
+  </a>
+    <a href="/adminpn/students" class="list-group-item list-group-item-action">Students</a
+  >
+  <a href="/adminpn/orders" class="list-group-item list-group-item-action">Orders</a>
+</div>
+<a href="/adminpn/teachers" class="list-group-item list-group-item-action">Staff</a>
+</div>
+{% endblock %}
